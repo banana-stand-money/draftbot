@@ -21,7 +21,7 @@ server.route({
 	method: 'POST',
 	path: '/',
 	handler: (request, h) => {
-          Bot.respond(request.payload)
+          return Bot.respond(request.payload)
 	}
 });
 
