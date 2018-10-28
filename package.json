@@ -1,0 +1,19 @@
+{
+  "name": "draftbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "pretest": "eslint --ignore-path .gitignore .",
+    "test": "yarn test"
+  },
+  "author": "sk",
+  "license": "ISC",
+  "dependencies": {
+    "hapi": "^17.6.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.8.0",
+    "eslint-config-strongloop": "^2.1.0"
+  }
+}
