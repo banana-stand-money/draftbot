@@ -2,11 +2,20 @@
 
 const Hapi = require('hapi');
 const Bot  = require('./bot.js');
-
+const mongoose = require('mongoose');
 const server = Hapi.server({
     port: 8080,
     host: 'localhost'
 });
+
+
+mongoose.connect('mongodb://localhost:27017/local')
+var db = mongoose.connection;
+db.on('error', ()=> {console.log( '---FAILED to connect to mongoose')})
+db.once('open', () => {
+ console.log( '+++Connected to mongoose')
+})
+
 
 server.route({
     method: 'GET',
