@@ -4,6 +4,12 @@ const Schema = mongoose.Schema;
 const draftSchema = new Schema({
     draftId: Number,
     tourneyName: String,
-    completed: Boolean
+    completed: Boolean,
+    golfers: [{
+	    name: String,
+	    odds: Number,
+	    team: String
+    }]
+    rosterSize: Number
 });
 module.exports = mongoose.model('Draft', draftSchema);

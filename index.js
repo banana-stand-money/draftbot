@@ -3,6 +3,9 @@
 const Hapi = require('hapi');
 const Bot  = require('./bot.js');
 const mongoose = require('mongoose');
+const { graphqlHapi, graphiqlHapi } = require('graphql-server-hapi'); 
+const schema = require('./graphql/schema');
+
 const server = Hapi.server({
     port: 8080,
     host: 'localhost'
@@ -39,21 +42,38 @@ server.route({
     path: '/{name}',
     handler: (request, h) => {
 
-        request.logger.info('In handler %s', request.path);
-
         return `Hello, ${encodeURIComponent(request.params.name)}!`;
     }
 });
 
 const init = async () => {
 
-    await server.register({
-        plugin: require('hapi-pino'),
-        options: {
-            prettyPrint: false,
-            logEvents: ['response', 'onPostStart']
-        }
-    });
+	await server.register({
+        	plugin: graphiqlHapi,
+		options: {
+			path: '/graphiql',
+			graphiqlOptions: {
+				endpointURL: '/graphql'
+			},
+			route: {
+				cors: true
+			}
+		}
+	});
+
+	await server.register({
+		plugin: graphqlHapi,
+		options: {
+			path: '/graphql',
+			graphqlOptions: {
+				schema
+			},
+			router: {
+				cors: true
+			}
+		}
+	});
+
 
     await server.start();
     console.log(`Server running at: ${server.info.uri}`);
