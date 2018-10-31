@@ -1,6 +1,7 @@
 const graphql = require('graphql');
+const GolferType = require('./GolferType');
 
-const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLBoolean } = graphql;
+const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLBoolean, GraphQLList } = graphql;
 
 const DraftType = new GraphQLObjectType({
 	name: 'Draft',
@@ -9,6 +10,8 @@ const DraftType = new GraphQLObjectType({
 		draftId: {type: GraphQLInt },
 		tourneyName: {type: GraphQLString },
 		completed: {type: GraphQLBoolean },
+		golfers: {type: new GraphQLList(GolferType)},
+		rosterSize: {type: GraphQLInt }
 	})
 
 });

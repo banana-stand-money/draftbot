@@ -1,5 +1,6 @@
 const graphql = require('graphql');
 const DraftType = require('./DraftType');
+const GolferType = require('./GolferType');
 const Draft = require('./../models/draft');
 
 const {

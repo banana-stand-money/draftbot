@@ -9,7 +9,7 @@ const draftSchema = new Schema({
 	    name: String,
 	    odds: Number,
 	    team: String
-    }]
+    }],
     rosterSize: Number
 });
 module.exports = mongoose.model('Draft', draftSchema);
