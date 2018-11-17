@@ -3,7 +3,8 @@
 const Hapi = require('hapi');
 const Bot  = require('./bot.js');
 const mongoose = require('mongoose');
-const { graphqlHapi, graphiqlHapi } = require('graphql-server-hapi'); 
+//const { graphqlHapi, graphiqlHapi } = require('apollo-server-hapi'); 
+const { ApolloServer, gql } = require('apollo-server-hapi');
 const schema = require('./graphql/schema');
 
 const server = Hapi.server({
@@ -12,13 +13,14 @@ const server = Hapi.server({
 });
 
 
-mongoose.connect('mongodb://localhost:27017/local')
-var db = mongoose.connection;
+mongoose.connect('mongodb://localhost:27017/local', { useNewUrlParser: true } )
+const db = mongoose.connection;
 db.on('error', ()=> {console.log( '---FAILED to connect to mongoose')})
 db.once('open', () => {
  console.log( '+++Connected to mongoose')
 })
-
+mongoose.set('debug', true);
+//autoIncrement.initialize(connection);
 
 server.route({
     method: 'GET',
@@ -47,7 +49,16 @@ server.route({
 });
 
 const init = async () => {
+	/*
+	const gqlserver = new ApolloServer({ 
+		//typeDefs, resolvers
+		schema});
 
+ await gqlserver.applyMiddleware({
+    server,
+  });
+	await gqlserver.installSubscriptionHandlers(server.listener);
+	
 	await server.register({
         	plugin: graphiqlHapi,
 		options: {
@@ -73,7 +84,7 @@ const init = async () => {
 			}
 		}
 	});
-
+*/
 
     await server.start();
     console.log(`Server running at: ${server.info.uri}`);
